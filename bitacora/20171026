@@ -1,0 +1,20 @@
+Reunión del 26 de octubre del 2017
+
+Personas presentes:
+-Sofía Fonseca
+-Laura Rincón
+-Emanuel Fernández
+
+Hora inicio: 9 a.m.
+Hora final: 10 a.m.
+
+Resumen:
+
+Se habló de cómo se va a trabajar el proyecto y se decidió que cada uno de los integrantes se encargará de un módulo.
+Se quiere tener los módulos listo para el 13 de noviembre para poder trabajar en la unión la última semana.
+Emanuel hará el FIFO.
+Sofía hará el Round Robin con pesos.
+Laura hará el FSM de Control y la lógica de Flow Control.
+
+Aparte de eso, Sofía se encargará de tener el makefile funcionando semana a semana para cada uno de los módulos, y cada uno llevará la documentación del trabajo hecho al día.
+
