@@ -6,22 +6,22 @@
 	
 ###########Comandos generales################################
 	
-make fifo:
+fifo:
 	iverilog -o fifo fifo_tb.v
 	vvp fifo
 	gtkwave fifo.vcd
 
-make robin:
-	iverilog -o robin robin_tb.v
+robin:
+	iverilog -o robin probador_RoundRobin_tb.v
 	vvp robin
 	gtkwave robin.vcd
 
-make fsm:
+fsm:
 	iverilog -o fsm fsm_tb.v
 	vvp fsm
 	gtkwave fsm.vcd
 
-make flow:
+flow:
 	iverilog -o flow flow_tb.v
 	vvp flow
 	gtkwave flow.vcd
