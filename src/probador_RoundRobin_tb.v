@@ -1,5 +1,4 @@
 `include "RoundRobin.v"
-//`include "roundrobinsynt.v"
 `include "probador_RoundRobin.v"
 
 module probadorRoundRobintb();
@@ -12,7 +11,6 @@ output wire [3:0] OUT;
 
 probadorrr prr(SELECT, CLK, TAB, W, ENB);
 roundrobin rr(SELECT, CLK, TAB, W, OUT, ENB);
-//roundrobinsynt rrsynt(selector, clk, table, weight, out, enb);
 
 
 initial 
