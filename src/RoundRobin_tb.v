@@ -1,5 +1,5 @@
 `include "RoundRobin.v"
-`include "probador_RoundRobin.v"
+`include "RoundRobin_p.v"
 
 module probadorRoundRobintb();
 

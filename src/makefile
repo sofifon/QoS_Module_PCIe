@@ -12,9 +12,14 @@ fifo:
 	gtkwave fifo.vcd
 
 robin:
-	iverilog -o robin probador_RoundRobin_tb.v
+	iverilog -o robin RoundRobin_tb.v
 	vvp robin
 	gtkwave robin.vcd
+
+translater:
+	iverilog -o translate translater_tb.v
+	vvp translate
+	gtkwave translate.vcd
 
 fsm:
 	iverilog -o fsm fsm_tb.v
