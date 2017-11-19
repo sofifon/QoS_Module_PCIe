@@ -1,4 +1,4 @@
-module RoundRobin(sel,clk,table,weight,enb);
+module RoundRobin(sel,clk,table,weight,enb, out);
 		input wire [1:0] sel;
 		input wire clk;
 		input wire enb;
