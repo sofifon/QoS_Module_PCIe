@@ -22,9 +22,9 @@ translater:
 	gtkwave translate.vcd
 
 fsm:
-	iverilog -o fsm fsm_tb.v
+	iverilog -o fsm FSM_tb.v
 	vvp fsm
-	gtkwave fsm.vcd
+	gtkwave FSM_synt.vcd
 
 flow:
 	iverilog -o flow flow_tb.v
@@ -42,4 +42,4 @@ look:
 	gtkwave module.vcd
 
 clean: 
-	rm -f -R *.o *.vcd fifo rr fsm flow module
+	rm -f -R *.o *.vcd fifo rr fsm flow module translate

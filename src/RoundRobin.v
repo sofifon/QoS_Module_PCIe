@@ -1,8 +1,6 @@
-module RoundRobin(sel,clk,table,weight,enb,out);
-		input wire [1:0] sel;
-		input wire clk;
-		input wire enb;
-		input wire [1:0] weight;
+module RoundRobin(sel,clk,table,weight,ENB,out);
+		input wire [1:0] sel, weight;
+		input wire clk, ENB;
 		input wire [31:0] table;
 		output reg [3:0] out;
 		reg [1:0] bits;
@@ -15,7 +13,7 @@ module RoundRobin(sel,clk,table,weight,enb,out);
 		end 
 
 		always @(posedge clk) begin
-			if(ENB==1) begin
+		\\	if(ENB==1) begin
 				if(sel==2'b00)begin
 					case(bits[1:0])
 						2'b00:
@@ -91,6 +89,6 @@ module RoundRobin(sel,clk,table,weight,enb,out);
 				if(sel==2'b11)begin
 					out<=0; 
 				end
-			end
+		\\	end
 		end
 	endmodule
