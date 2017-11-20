@@ -42,4 +42,4 @@ look:
 	gtkwave module.vcd
 
 clean: 
-	rm -f -R *.o *.vcd fifo rr fsm flow module translate
+	rm -f -R *.o *.vcd fifo robin fsm flow module translate
