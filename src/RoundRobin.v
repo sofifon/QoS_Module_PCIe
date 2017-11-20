@@ -86,6 +86,9 @@ module RoundRobin(sel,clk,TABLE,weight,ENB, out);
 						endcase
 						count<=count+1;
 					end
+					else begin
+						count<=0;
+					end
 				end 
 				else
 				if(sel==2'b10)begin
