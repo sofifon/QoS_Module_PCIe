@@ -14,7 +14,7 @@ initial
 	$dumpvars;
 	
 	
-	reset <= 1;
+	reset <= 0;
 	set_init <= 1;
 	empty <= 4'd0;
 	full <= 4'd0;
@@ -22,7 +22,7 @@ initial
 	Continue <= 4'd0;
 	#14
 	//@(posedge CLK)
-	reset <= 0;
+	reset <= 1;
 	#10
 	//@(posedge CLK)
 	set_init <= 0;
