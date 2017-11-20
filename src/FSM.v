@@ -10,14 +10,14 @@ output reg [3:0] continue_stb, pause_stb, error_full;
 reg [3:0] state, next_state, pause_signal, continue_signal;
 
 //Declaracion de estados
-parameter [2:0] Reset = 3'b000,
+/*parameter [2:0] Reset = 3'b000,
 				Init  = 3'b001,
 				IDLE  = 3'b010,
 				Active = 3'b011,
 				Pause = 3'b100,
 				Continue = 3'b101,
 				Pause_Continue = 3'b110,
-				Error = 3'b111;
+				Error = 3'b111;*/
 				
 //Maquina de Estados
 
@@ -25,148 +25,148 @@ always @(*)
 	begin
 	//next_state = state;
 	case (state)
-		Reset:  begin
+		3'b000:  begin
 				if(reset)
 					begin
-						next_state = Reset;
+						next_state = 3'b000;
 					end
 				else 
 					begin
-						next_state = Init;
+						next_state = 3'b001;
 					end
 				end
 				
-		Init:   begin
+		3'b001:   begin
 				if(set_init)
 					begin
-						next_state = Init;
+						next_state = 3'b001;
 					end
 				else
 					begin
-						next_state = IDLE;
+						next_state = 3'b010;
 					end
 				end
 				
-		IDLE:	begin
+		3'b010:	begin
 				if(&(empty))
 					begin
-						next_state = IDLE;
+						next_state = 3'b010;
 					end
 				else
 					begin
-						next_state = Active;
+						next_state = 3'b011;
 					end
 
 				end
-		Active: 
+		3'b011: 
 			begin
 			if(|pause_fifos && |continue_fifos && pause_fifos!=pause_signal && continue_fifos!=continue_signal)
 				begin
-					next_state = Pause_Continue;
+					next_state = 3'b110;
 				end
 			else if(|continue_fifos && continue_fifos!=continue_signal)
 				begin
-					next_state = Continue;
+					next_state = 3'b101;
 				end
 			else if(|pause_fifos && pause_fifos!=pause_signal)
 				begin
-					next_state = Pause;
+					next_state = 3'b100;
 				end
 			else if(|(full))
 				begin
-					next_state = Error;
+					next_state = 3'b111;
 				end	
 			else 
 				begin
-					next_state = Active;
+					next_state = 3'b011;
 				end
 			end
 
-		Pause:
+		3'b100:
 			begin
 			if(|pause_fifos && pause_fifos!=pause_signal)
 				begin
-					next_state = Pause;
+					next_state = 3'b100;
 				end
 			else if(|continue_fifos && continue_fifos!=continue_signal)
 				begin
-					next_state = Continue;
+					next_state = 3'b101;
 				end
 			else if(|pause_fifos && |continue_fifos && pause_fifos!=pause_signal && continue_fifos!=continue_signal)
 				begin
-					next_state = Pause_Continue;
+					next_state = 3'b110;
 				end
 			else if(|(full))
 				begin
-					next_state = Error;
+					next_state = 3'b111;
 				end
 			else 
 				begin
-					next_state = Active;
+					next_state = 3'b011;
 				end
 			end
 
-		Continue:
+		3'b101:
 			begin
 			if(|pause_fifos && pause_fifos!=pause_signal)
 				begin
-					next_state = Pause;
+					next_state = 3'b100;
 				end
 			else if(|continue_fifos && continue_fifos!=continue_signal)
 				begin
-					next_state = Continue;
+					next_state = 3'b101;
 				end
 			else if(|pause_fifos && |continue_fifos && pause_fifos!=pause_signal && continue_fifos!=continue_signal)
 				begin
-					next_state = Pause_Continue;
+					next_state = 3'b110;
 				end
 			else if(|(full))
 				begin
-					next_state = Error;
+					next_state = 3'b111;
 				end
 			else 
 				begin
-					next_state = Active;
+					next_state = 3'b011;
 				end
 			end
 			
-		Pause_Continue:
+		3'b110:
 			begin
 			if(|pause_fifos && pause_fifos!=pause_signal)
 				begin
-					next_state = Pause;
+					next_state = 3'b100;
 				end
 			else if(|continue_fifos && continue_fifos!=continue_signal)
 				begin
-					next_state = Continue;
+					next_state = 3'b101;
 				end
 			else if(|pause_fifos && |continue_fifos && pause_fifos!=pause_signal && continue_fifos!=continue_signal)
 				begin
-					next_state = Pause_Continue;
+					next_state = 3'b110;
 				end
 			else if(|(full))
 				begin
-					next_state = Error;
+					next_state = 3'b111;
 				end
 			else 
 				begin
-					next_state = Active;
+					next_state = 3'b011;
 				end
 			end
 		
-		Error:  begin
+		3'b111:  begin
 				if(reset)
 					begin
-						next_state = Reset;
+						next_state = 3'b000;
 					end
 				else
 					begin
-						next_state = Error;
+						next_state = 3'b111;
 					end
 				end
 		default: 
 				begin 
-					next_state = Reset;
+					next_state = 3'b000;
 					//next_state = state;
 				end
 	endcase	
@@ -203,7 +203,7 @@ always @(posedge CLK)
 		begin
 		case(next_state)
 
-		Init:
+		3'b001:
 			begin
 				idle <= 0;
 				error_full <= 4'd0;
@@ -221,7 +221,7 @@ always @(posedge CLK)
 					end
 			end
 			
-		IDLE:
+		3'b010:
 			begin
 				error_full <= 4'd0;
 				continue_stb <= 4'd0;
@@ -239,7 +239,7 @@ always @(posedge CLK)
 					end
 			end
 			
-		Pause:
+		3'b100:
 			begin
 				init <= 0;
 				idle <= 0;
@@ -257,7 +257,7 @@ always @(posedge CLK)
 				pause_signal<= pause_fifos;
 			end
 		
-		Continue:
+		3'b101:
 			begin
 				init <= 0;
 				idle <= 0;
@@ -274,7 +274,7 @@ always @(posedge CLK)
 				continue_signal <= continue_fifos;
 				pause_signal<= pause_fifos;
 			end
-		Pause_Continue:
+		3'b110:
 			begin
 				init <= 0;
 				idle <= 0;
@@ -293,7 +293,7 @@ always @(posedge CLK)
 				pause_signal<= pause_fifos;
 			end
 		
-		Error:  
+		3'b111:  
 			begin
 				init <= 0;
 				idle <= 0;

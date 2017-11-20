@@ -1,21 +1,27 @@
-module RoundRobin(sel,clk,table,weight,enb, out);
+module RoundRobin(sel,clk,TABLE,weight,ENB, out);
 		input wire [1:0] sel;
 		input wire clk;
-		input wire enb;
+		input wire ENB;
 		input wire [1:0] weight;
-		input wire [31:0] table;
+		input wire [31:0] TABLE;
 		output reg [3:0] out;
-		reg [1:0] bits;
-		reg [3:0] count;
+		reg [1:0] bits, w;
+		reg [15:0] count;
+		reg [1:0] AArb[15:0];
 		
 		always @(sel)
 		begin
 			bits=0;
 			count=0;
+			AArb[1]=2'b10;
+		end 
+
+		always @(weight)
+		begin
+			w=weight;
 		end 
 
 		always @(posedge clk) begin
-			if(ENB==1) begin
 				if(sel==2'b00)begin
 					case(bits[1:0])
 						2'b00:
@@ -42,55 +48,153 @@ module RoundRobin(sel,clk,table,weight,enb, out);
 				end 
 				else
 				if(sel==2'b01)begin
-					out<=4'b0000; 
+					AArb[0]<=TABLE[1:0];
+					AArb[1]<=TABLE[3:2];
+					AArb[2]<=TABLE[5:4];
+					AArb[3]<=TABLE[7:6];
+					AArb[4]<=TABLE[9:8];
+					AArb[5]<=TABLE[11:10];
+					AArb[6]<=TABLE[13:12];
+					AArb[7]<=TABLE[15:14];
+					AArb[8]<=TABLE[17:16];
+					AArb[9]<=TABLE[19:18];
+					AArb[10]<=TABLE[21:20];
+					AArb[11]<=TABLE[23:22];
+					AArb[12]<=TABLE[25:24];
+					AArb[13]<=TABLE[27:26];
+					AArb[14]<=TABLE[29:28];
+					AArb[15]<=TABLE[31:30];
+					if(count < 16) begin
+						bits<=AArb[count+1];
+						case(bits[1:0])
+							2'b00:
+							begin
+								out<=4'b0001;
+							end
+							2'b01:
+							begin	
+								out<=4'b0010;
+							end
+							2'b10:
+							begin	
+								out<=4'b0100;
+							end
+							2'b11:
+							begin	
+								out<=4'b1000;
+							end
+						endcase
+						count<=count+1;
+					end
 				end 
 				else
 				if(sel==2'b10)begin
 					if(bits==2'b00)begin
-						if(weight==0)begin
+						if(w==0)begin
 							bits<=2'b01;
 						end
 						else
 						begin
 							out<=4'b0001;
-							weight<=weight-1;
+							w<=w-1;
 						end
 					end
 					if(bits==2'b01)begin
-						if(weight==0)begin
+						if(w==0)begin
 							bits<=2'b10;
 						end
 						else
 						begin
 							out<=4'b0010;
-							weight<=weight-1;
+							w<=w-1;
 						end
 					end
 					if(bits==2'b10)begin
-						if(weight==0)begin
+						if(w==0)begin
 							bits<=2'b11;
 						end
 						else
 						begin
 							out<=4'b0100;
-							weight<=weight-1;
+							w<=-1;
 						end
 					end
 					if(bits==2'b11)begin
-						if(weight==0)begin
+						if(w==0)begin
 							bits<=2'b00;
 						end
 						else
 						begin
 							out<=4'b1000;
-							weight<=weight-1;
+							w<=w-1;
 						end
 					end
 				end
 				else
 				if(sel==2'b11)begin
-					out<=0; 
+					AArb[0]<=TABLE[1:0];
+					AArb[1]<=TABLE[3:2];
+					AArb[2]<=TABLE[5:4];
+					AArb[3]<=TABLE[7:6];
+					AArb[4]<=TABLE[9:8];
+					AArb[5]<=TABLE[11:10];
+					AArb[6]<=TABLE[13:12];
+					AArb[7]<=TABLE[15:14];
+					AArb[8]<=TABLE[17:16];
+					AArb[9]<=TABLE[19:18];
+					AArb[10]<=TABLE[21:20];
+					AArb[11]<=TABLE[23:22];
+					AArb[12]<=TABLE[25:24];
+					AArb[13]<=TABLE[27:26];
+					AArb[14]<=TABLE[29:28];
+					AArb[15]<=TABLE[31:30];
+					if(count < 16) begin
+						bits<=AArb[count+1];
+						if(bits==2'b00)begin
+							out<=4'b0001;
+							if(w==0)begin
+								count<=count+1;
+								w=weight;
+							end
+							else
+							begin
+								w<=w-1;
+							end
+						end
+						if(bits==2'b01)begin
+							out<=4'b0010;
+							if(w==0)begin
+								count<=count+1;
+								w=weight;
+							end
+							else
+							begin
+								w<=w-1;
+							end
+						end
+						if(bits==2'b10)begin
+							out<=4'b0100;
+							if(w==0)begin
+								count<=count+1;
+								w=weight;
+							end
+							else
+							begin
+								w<=w-1;
+							end
+						end
+						if(bits==2'b11)begin
+							out<=4'b1000;
+							if(w==0)begin
+								count<=count+1;
+								w=weight;
+							end
+							else
+							begin
+								w<=w-1;
+							end
+						end
+					end
 				end
 			end
-		end
 	endmodule

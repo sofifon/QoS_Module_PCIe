@@ -10,7 +10,7 @@ input wire CLK, ENB;
 output wire [3:0] OUT;
 
 probadorrr prr(SELECT, CLK, TAB, W, ENB);
-roundrobin rr(SELECT, CLK, TAB, W, OUT, ENB);
+RoundRobin rr(SELECT, CLK, TAB, W, ENB, OUT);
 
 
 initial 
