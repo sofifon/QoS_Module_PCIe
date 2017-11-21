@@ -28,94 +28,126 @@ initial
 	Selector <= 2'b01;
 	Weight <= 2'b00;
 	#30
+	@(posedge CLK);
 	Reset <= 1;
 	#10
+	@(posedge CLK);
 	Set_init <= 0;
 	#30
+	@(posedge CLK);
 	transmitter <= 0;
 	Push_fifos <= 1;
 	VC_ID <= 2'b00;
 	DataWord <= 4'd0; 
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b00;
 	DataWord <= 4'd1; 
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b00;
 	DataWord <= 4'd2; 
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b01;
 	DataWord <= 4'd3; 
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b01;
 	DataWord <= 4'd4;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b10;
 	DataWord <= 4'd5; 
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b10;
 	DataWord <= 4'd6;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b11;
 	DataWord <= 4'd7;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b10;
 	DataWord <= 4'd8;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b01;
 	DataWord <= 4'd9;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b11;
 	DataWord <= 4'd10;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b11;
 	DataWord <= 4'd11;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b11;
 	DataWord <= 4'd12;
 	#20 
-	@(posedge CLk);
+	@(posedge CLK);
 	VC_ID <= 2'b00;
 	DataWord <= 4'd13;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b00;
 	DataWord <= 4'd14;
-	Pop_CF <=1;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b01;
 	DataWord <= 4'd15;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b10;
 	DataWord <= 4'd12;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b10;
 	DataWord <= 4'd13;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b11;
 	DataWord <= 4'd15;
+	Pop_CF <=1;
 	#20
+	@(posedge CLK);
 	VC_ID <= 2'b01;
 	DataWord <= 4'd11;
-	#20 transmitter <= 1;
+	#20 
+	@(posedge CLK);
+	transmitter <= 1;
 	Pop_buffer <= 1;
-	#20
+	#40
+	@(posedge CLK);
 	Pop_buffer <= 0;
 	#20
+	@(posedge CLK);
 	Pop_buffer <= 1;
-	#20
+	#40
+	@(posedge CLK);
 	Pop_buffer <= 0;
 	#40
+	@(posedge CLK);
 	Pop_buffer <= 1;
-	#20
+	#40
+	@(posedge CLK);
 	Pop_buffer <= 0;
 	#10
-	// Pop_buffer <= 1;
-	// #40
-	// Pop_buffer <= 0;
-	// #30
-	// Pop_buffer <= 1;
-	// #40
-	// Pop_buffer <= 0;
-	// #30
+	@(posedge CLK);
+	Pop_buffer <= 1;
+	#40
+	@(posedge CLK);
+	Pop_buffer <= 0;
+	#30
+	@(posedge CLK);
+	Pop_buffer <= 1;
+	#40
+	@(posedge CLK);
+	Pop_buffer <= 0;
+	#30
 	$finish;
 	end
 	
