@@ -7,9 +7,9 @@
 ###########Comandos generales################################
 	
 fifo:
-	iverilog -o fifo fifo_tb.v
+	iverilog -o fifo testbenchFIFO.v
 	vvp fifo
-	gtkwave fifo.vcd
+	gtkwave probadorFIFO.vcd
 
 robin:
 	iverilog -o robin RoundRobin_tb.v
@@ -26,20 +26,16 @@ fsm:
 	vvp fsm
 	gtkwave FSM_synt.vcd
 
-flow:
-	iverilog -o flow flow_tb.v
-	vvp flow
-	gtkwave flow.vcd
-
-
 make:
-	iverilog -o module probador_tb.v
+	iverilog -o module TESTBENCHTRANSACTIONLL.v
+	vvp module
+	gtkwave Transmitter.vcd
 
 run: 
 	vvp module
 	
 look:
-	gtkwave module.vcd
+	gtkwave Transmitter.vcd
 
 clean: 
-	rm -f -R *.o *.vcd fifo robin fsm flow module translate
+	rm -f -R *.o *.vcd fifo robin fsm module translate
